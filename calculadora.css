@@ -1,0 +1,61 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.ppal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    padding: 20px;
+}
+
+h1{
+    color: red;
+}
+
+.general{
+    width: 480px;
+    min-height: 94vh;
+    background-color: burlywood;
+    border: 2px solid black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;   
+}
+
+.pantalla{
+    border: 2px solid black;
+    border-radius: 20px;
+    width: 450px;
+    height: 60px;
+    background-color: lightyellow;
+    text-align: end;
+    font-size: 50px;
+    padding-right: 10px;
+}
+
+.teclado{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;    
+    width: 450px;
+    height: 500px;
+    border: 2px solid  rgb(226, 177, 43);
+    border-radius: 20px;
+    opacity: .5
+}
+
+button{
+    width: 70px;
+    height:70px;
+    margin: 10px;    
+    color: black;
+    border-radius: 20px;
+    font-size: 30px;
+}
