@@ -1,55 +1,96 @@
-const pantalla = document.querySelector(".pantalla")
-const botones = document.querySelectorAll(".btn") // al seleccionar todos, se genera un array
+const pantalla = document.querySelector(".pantalla");
+const botones = document.querySelectorAll(".btn");
+
+let parentesis = false
+let signoOperacion = false
+let primerNumero = '';
+let operador = '';
+let segundoNumero = '';
+let escribiendoSegundoNumero = false;
 
 botones.forEach(boton => {
     boton.addEventListener("click", () => {
-        const onClickBtn = boton.textContent; // textContent muestra el valor de cada boton
+        const onClickBtn = boton.textContent;
 
         if (boton.id === "c") {
             pantalla.textContent = "0";
-            return // usamos return para terminar la funcion y que no ejecute el resto del codigo
-        }
-
-        if (boton.id === "borrar") {
-            // este if anidado evitara que la pantalla se quede vacia y nos devuelve el 0 si borramos todos los numeros
-            if (pantalla.textContent.length === 1 || pantalla.textContent === "error" || pantalla.textContent === "NaN") {
-                pantalla.textContent = "0"
-            }
-            else {
-                // usamos el metodo slice junto con 0 para la posicion 0 y -1 para que inicie a contar desde el ultimo numero insertado
-                pantalla.textContent = pantalla.textContent.slice(0, -1)
-            }
-            return
-        }
+            primerNumero = '';
+            operador = '';
+            segundoNumero = '';
+            escribiendoSegundoNumero = false;
+            return;
+        }        
 
         if (boton.id === "igual") {
-
-            try {
-                // para resolver las operaciones, usamos el metodo "eval" que evalua la operacion en pantalla y la resulve al presionar el boton "igual"
-                let resultado = eval(pantalla.textContent)
-                /* con el  metodo parseFloat convertimos la cadena a numero
-                luego con el metodo aplicaldo a la variable resultado donde hemos guardado el resultado de la operacion , reduzco la cantidad de decimales a maximo 6 en caso de que los haya */
-                let resultadoRedondeado = parseFloat(resultado.toFixed(6));
-
-                // Actualiza el contenido de la pantalla con el resultado redondeado
-                pantalla.textContent = resultadoRedondeado;
+            if (primerNumero !== '' && operador !== '' && segundoNumero !== '') {
+                try {
+                    let resultado = eval(`${primerNumero} ${operador} ${segundoNumero}`);
+                    let resultadoRedondeado = parseFloat(resultado.toFixed(6));
+                    pantalla.textContent = resultadoRedondeado;
+                    primerNumero = resultadoRedondeado.toString();
+                    operador = '';
+                    segundoNumero = '';
+                    escribiendoSegundoNumero = false;
+                } catch {
+                    pantalla.textContent = "error";
+                }
             }
-            catch {
-                pantalla.textContent = "error"
-            }
-            return
+            return;
         }
 
         if (boton.id === "signo") {
-            pantalla.textContent = - + pantalla.textContent
+
+            if (signoOperacion === false) {
+                pantalla.textContent = - + pantalla.textContent
+                signoOperacion = false
+            }
+            else if (signoOperacion === true) {
+                pantalla.textContent = + + pantalla.textContent
+                signoOperacion = true
+
+            } 
             return
+        }
+        
+        if (boton.id === "porcentaje") {
+            pantalla.textContent = pantalla.textContent / 100;
+            return;
+        }
+
+        // if (boton.id === "parentesis"){
+        //     if (parentesis === false){
+        //         pantalla.textContent += "("
+        //         parentesis = true
+        //     } 
+        //     else if (parentesis === true){
+        //         pantalla.textContent += ")"
+        //         parentesis = false
+        //     }
+        //     return
+        // }
+
+        if (boton.classList.contains("operador")) {
+            if (pantalla.textContent !== "0" && pantalla.textContent !== "error" && pantalla.textContent !== "NaN") {
+                primerNumero = pantalla.textContent;
+                operador = onClickBtn;
+                escribiendoSegundoNumero = true;
+            }
+            return;
         }        
 
-        if (pantalla.textContent === "0" || pantalla.textContent === "error" || pantalla.textContent === "NaN") {
-            pantalla.textContent = onClickBtn  // esta linea sustituye el 0 por el numero apretado
+        if (escribiendoSegundoNumero) {
+            pantalla.textContent = onClickBtn;
+            escribiendoSegundoNumero = false;
+        } else {
+            if (pantalla.textContent === "0" || pantalla.textContent === "error" || pantalla.textContent === "NaN") {
+                pantalla.textContent = onClickBtn;
+            } else {
+                pantalla.textContent += onClickBtn;
+            }
         }
-        else {
-            pantalla.textContent += onClickBtn // usamos += para que se aniadan los numero al final de cada cifra
+
+        if (operador !== '') {
+            segundoNumero = pantalla.textContent;
         }
-    })
-})
+    });
+});

@@ -59,3 +59,12 @@ button{
     border-radius: 20px;
     font-size: 30px;
 }
+
+.btn.operador:focus{
+    background-color: rgb(133, 128, 128);
+}
+
+.btn:active{
+    background-color: rgb(133, 128, 128);
+    scale: 0.9;
+}
