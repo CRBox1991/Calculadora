@@ -46,9 +46,9 @@ h1{
     flex-wrap: wrap;    
     width: 450px;
     height: 500px;
-    border: 2px solid  rgb(226, 177, 43);
+    border: 2px solid black;
     border-radius: 20px;
-    opacity: .5
+    
 }
 
 button{
@@ -58,6 +58,7 @@ button{
     color: black;
     border-radius: 20px;
     font-size: 30px;
+    opacity:0.7;
 }
 
 .btn.operador:focus{
